@@ -1,4 +1,4 @@
-module github.com/daniil4142/book-market/book-service
+module github.com/daniil4142/book-market//book-service
 
 go 1.23.5
 
