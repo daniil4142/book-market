@@ -35,12 +35,8 @@ test:
 	go tool cover -func cover.out | grep total | awk '{print $$3}'
 
 # ----------------------------------------------------------------
-
 .PHONY: generate
 generate: .generate-install-buf .generate-go .generate-finalize-go
-
-.PHONY: generate
-generate-go: .generate-install-buf .generate-go .generate-finalize-go
 
 .generate-install-buf:
 	@ command -v buf 2>&1 > /dev/null || (echo "Install buf" && \
@@ -51,7 +47,6 @@ generate-go: .generate-install-buf .generate-go .generate-finalize-go
 	$(BUF_EXE) generate
 
 .generate-finalize-go:
-	rm -rf pkg/$(SERVICE_NAME)/github.com/
 	cd pkg/$(SERVICE_NAME) && ls go.mod || (go mod init github.com/$(SERVICE_PATH)/pkg/$(SERVICE_NAME) && go mod tidy)
 
 # ----------------------------------------------------------------

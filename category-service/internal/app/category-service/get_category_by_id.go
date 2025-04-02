@@ -9,7 +9,7 @@ import (
 
 	internal_errors "github.com/daniil4142/book-market/category-service/internal/pkg/errors"
 	"github.com/daniil4142/book-market/category-service/internal/service/category"
-	category_service "github.com/daniil4142/book-market/category-service/pkg/category-service/pkg/category-service"
+	category_service "github.com/daniil4142/book-market/category-service/pkg/category-service"
 )
 
 func (i *Implementation) GetCategoryById(ctx context.Context, req *category_service.GetCategoryByIdRequest) (*category_service.GetCategoryByIdResponse, error) {
