@@ -1,8 +1,6 @@
 module github.com/daniil4142/book-market/category-service
 
-go 1.23
-
-toolchain go1.23.5
+go 1.23.5
 
 require (
 	github.com/daniil4142/book-market/category-service/pkg/category-service v0.0.0
@@ -38,4 +36,4 @@ require (
 	gopkg.in/check.v1 v1.0.0-20200227125254-8fa46927fb4f // indirect
 )
 
-replace github.com/daniil4142/book-market/category-service/pkg/category-service => ./pkg/category-service
+//replace github.com/daniil4142/book-market/category-service/pkg/category-service/pkg/category-service => ./pkg/category-service
