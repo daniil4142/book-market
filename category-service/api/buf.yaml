@@ -6,19 +6,15 @@
 #
 # The only valid versions are "v1beta1", "v1".
 # This key is required.
-version: v1beta1
+version: v1
 
 # name is the module name.
 #name: buf.build/acme/weather
 
 # deps are the module dependencies
-#deps:
-#  - buf.build/acme/petapis
-#  - buf.build/acme/pkg:alpha
-#  - buf.build/acme/paymentapis:7e8b594e68324329a7aefc6e750d18b9
-deps:
-  - buf.build/googleapis/googleapis
-  - buf.build/envoyproxy/protoc-gen-validate
+# deps:
+#   - buf.build/googleapis/googleapis
+#   - buf.build/envoyproxy/protoc-gen-validate
 
 # build contains the options for builds.
 #
@@ -43,6 +39,7 @@ build:
 
 # lint contains the options for lint rules.
 lint:
+
   # use is the list of rule categories and ids to use for buf lint.
   #
   # Categories are sets of rule ids.
@@ -67,9 +64,9 @@ lint:
   # All directories and file paths are specified relative to the root directory.
   # The directory "." is not allowed - this is equivalent to ignoring
   # everything.
-  #ignore:
-  #  - bat
-  #  - ban/ban.proto
+  ignore:
+    - validate
+    - google
 
   # ignore_only is the map from rule id or category to file or directory to
   # ignore.
@@ -145,6 +142,7 @@ lint:
 
 # breaking contains the options for breaking rules.
 breaking:
+
   # use is the list of rule categories and ids to use for
   # buf breaking.
   #

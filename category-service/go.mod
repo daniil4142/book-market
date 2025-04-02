@@ -1,14 +1,16 @@
 module github.com/daniil4142/book-market/category-service
 
-go 1.17
+go 1.23
+
+toolchain go1.23.5
 
 require (
+	github.com/daniil4142/book-market/category-service/pkg/category-service v0.0.0
 	github.com/grpc-ecosystem/go-grpc-middleware v1.3.0
 	github.com/grpc-ecosystem/grpc-gateway/v2 v2.6.0
 	github.com/jackc/pgx/v4 v4.13.0
 	github.com/lib/pq v1.10.3
 	github.com/opentracing/opentracing-go v1.2.0
-	github.com/daniil4142/book-market/category-service/pkg/category-service v0.0.0
 	github.com/pkg/errors v0.9.1
 	github.com/rs/zerolog v1.24.0
 	google.golang.org/grpc v1.41.0

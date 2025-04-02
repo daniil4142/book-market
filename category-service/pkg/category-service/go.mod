@@ -1,18 +1,17 @@
 module github.com/daniil4142/book-market/category-service/pkg/category-service
 
-go 1.17
+go 1.23.5
 
 require (
-	github.com/envoyproxy/protoc-gen-validate v0.6.2
-	github.com/grpc-ecosystem/grpc-gateway/v2 v2.6.0
-	google.golang.org/genproto v0.0.0-20211021150943-2b146023228c
-	google.golang.org/grpc v1.41.0
-	google.golang.org/protobuf v1.27.1
+	github.com/envoyproxy/protoc-gen-validate v1.2.1
+	google.golang.org/genproto/googleapis/api v0.0.0-20250324211829-b45e905df463
+	google.golang.org/grpc v1.71.1
+	google.golang.org/protobuf v1.36.6
 )
 
 require (
-	github.com/golang/protobuf v1.5.2 // indirect
-	golang.org/x/net v0.0.0-20210813160813-60bc85c4be6d // indirect
-	golang.org/x/sys v0.0.0-20210816183151-1e6c022a8912 // indirect
-	golang.org/x/text v0.3.7 // indirect
+	golang.org/x/net v0.37.0 // indirect
+	golang.org/x/sys v0.31.0 // indirect
+	golang.org/x/text v0.23.0 // indirect
+	google.golang.org/genproto/googleapis/rpc v0.0.0-20250313205543-e70fdf4c4cb4 // indirect
 )

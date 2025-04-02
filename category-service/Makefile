@@ -8,6 +8,9 @@ export GO111MODULE=on
 SERVICE_NAME=category-service
 SERVICE_PATH=daniil4142/book-market/category-service
 
+PGV_VERSION:="v0.6.1"
+BUF_VERSION:="v1.16.0"
+
 OS_NAME=$(shell uname -s)
 OS_ARCH=$(shell uname -m)
 GO_BIN=$(shell go env GOPATH)/bin
@@ -31,9 +34,27 @@ test:
 	go test -v -race -timeout 30s -coverprofile cover.out ./...
 	go tool cover -func cover.out | grep total | awk '{print $$3}'
 
+# ----------------------------------------------------------------
+
 .PHONY: generate
-generate:
+generate: .generate-install-buf .generate-go .generate-finalize-go
+
+.PHONY: generate
+generate-go: .generate-install-buf .generate-go .generate-finalize-go
+
+.generate-install-buf:
+	@ command -v buf 2>&1 > /dev/null || (echo "Install buf" && \
+    		curl -sSL0 https://github.com/bufbuild/buf/releases/download/$(BUF_VERSION)/buf-$(OS_NAME)-$(OS_ARCH)$(shell go env GOEXE) --create-dirs -o "$(BUF_EXE)" && \
+    		chmod +x "$(BUF_EXE)")
+
+.generate-go:
 	$(BUF_EXE) generate
+
+.generate-finalize-go:
+	rm -rf pkg/$(SERVICE_NAME)/github.com/
+	cd pkg/$(SERVICE_NAME) && ls go.mod || (go mod init github.com/$(SERVICE_PATH)/pkg/$(SERVICE_NAME) && go mod tidy)
+
+# ----------------------------------------------------------------
 
 .PHONY: deps
 deps:

@@ -1,7 +1,7 @@
 {
   "swagger": "2.0",
   "info": {
-    "title": "api/category-service/category-service.proto",
+    "title": "category-service/v1/category-service.proto",
     "version": "version not set"
   },
   "tags": [
@@ -16,7 +16,7 @@
     "application/json"
   ],
   "paths": {
-    "/ozon-edu-go-2021.week_3_workshop.category_service.category_service.v1.CategoryService/GetCategoryById": {
+    "/daniil4142.book_market.category_service.category_service.v1.CategoryService/GetCategoryById": {
       "post": {
         "operationId": "CategoryService_GetCategoryById",
         "responses": {
@@ -105,8 +105,7 @@
       "type": "object",
       "properties": {
         "category": {
-          "$ref": "#/definitions/v1Category",
-          "title": "Категория"
+          "$ref": "#/definitions/v1Category"
         }
       }
     }

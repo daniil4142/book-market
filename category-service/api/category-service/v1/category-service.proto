@@ -1,6 +1,6 @@
 syntax = "proto3";
 
-package daniil4142.book-market.category_service.category_service.v1;
+package daniil4142.book_market.category_service.category_service.v1;
 
 import "google/api/annotations.proto";
 import "validate/validate.proto";
@@ -21,6 +21,5 @@ message GetCategoryByIdRequest {
 }
 
 message GetCategoryByIdResponse {
-  // Категория
   Category category = 1;
 }
