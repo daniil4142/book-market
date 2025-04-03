@@ -31,6 +31,7 @@ func createSwaggerServer(gatewayAddr, swaggerAddr, swaggerPath string) (*http.Se
 		w.Header().Set("Content-type", "application/json")
 		w.WriteHeader(200)
 		w.Write(patchedSwagger)
+
 	}))
 
 	docsServer := http.FileServer(http.Dir("./swagger/dist"))

@@ -9,15 +9,15 @@ import (
 var categories = category.Categories{
 	{
 		ID:   1,
-		Name: "Toys",
+		Name: "Fantasy",
 	},
 	{
 		ID:   2,
-		Name: "Laptops",
+		Name: "Sci-fi",
 	},
 	{
 		ID:   3,
-		Name: "Auto",
+		Name: "Romance novel",
 	},
 }
 
