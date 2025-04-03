@@ -1,14 +1,26 @@
+GO_VERSION_SHORT:=$(shell echo `go version` | sed -E 's/.* go(.*) .*/\1/g')
+ifneq ("1.16","$(shell printf "$(GO_VERSION_SHORT)\n1.16" | sort -V | head -1)")
+$(error NEED GO VERSION >= 1.16. Found: $(GO_VERSION_SHORT))
+endif
+
 export GO111MODULE=on
 
 SERVICE_NAME=book-service
-SERVICE_PATH=book-market/book-service
+SERVICE_PATH=daniil4142/book-market/book-service
+
+PGV_VERSION:="v0.6.1"
+BUF_VERSION:="v1.16.0"
 
 OS_NAME=$(shell uname -s)
 OS_ARCH=$(shell uname -m)
 GO_BIN=$(shell go env GOPATH)/bin
 BUF_EXE=$(GO_BIN)/buf$(shell go env GOEXE)
 
-PHONY: run
+ifeq ("NT", "$(findstring NT,$(OS_NAME))")
+OS_NAME=Windows
+endif
+
+.PHONY: run
 run:
 	go run cmd/grpc-server/main.go
 
@@ -16,15 +28,28 @@ run:
 lint:
 	golangci-lint run ./...
 
-PHONY: test
+
+.PHONY: test
 test:
 	go test -v -race -timeout 30s -coverprofile cover.out ./...
 	go tool cover -func cover.out | grep total | awk '{print $$3}'
 
-
+# ----------------------------------------------------------------
 .PHONY: generate
-generate:
+generate: .generate-install-buf .generate-go .generate-finalize-go
+
+.generate-install-buf:
+	@ command -v buf 2>&1 > /dev/null || (echo "Install buf" && \
+    		curl -sSL0 https://github.com/bufbuild/buf/releases/download/$(BUF_VERSION)/buf-$(OS_NAME)-$(OS_ARCH)$(shell go env GOEXE) --create-dirs -o "$(BUF_EXE)" && \
+    		chmod +x "$(BUF_EXE)")
+
+.generate-go:
 	$(BUF_EXE) generate
+
+.generate-finalize-go:
+	cd pkg/$(SERVICE_NAME) && ls go.mod || (go mod init github.com/$(SERVICE_PATH)/pkg/$(SERVICE_NAME) && go mod tidy)
+
+# ----------------------------------------------------------------
 
 .PHONY: deps
 deps:
@@ -36,15 +61,13 @@ deps:
 	go install github.com/bufbuild/buf/cmd/buf@v0.56.0
 	go install github.com/bufbuild/buf/cmd/protoc-gen-buf-breaking@v0.56.0
 	go install github.com/bufbuild/buf/cmd/protoc-gen-buf-lint@v0.56.0
-	go mod download
-
 
 .PHONY: build
 build: generate .build
 
 .PHONY: .build
 .build:
-	CGO_ENABLED=0  go build \
+	go mod download && CGO_ENABLED=0  go build \
 		-tags='no_mysql no_sqlite3' \
 		-ldflags=" \
 			-X 'github.com/$(SERVICE_PATH)/internal/config.version=$(VERSION)' \

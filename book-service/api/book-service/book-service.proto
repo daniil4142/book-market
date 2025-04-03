@@ -1,28 +1,16 @@
 syntax = "proto3";
 
-package daniil4142.book_market.book_service.book_service.v1;
+package daniil4142.book_market.book_service.v1;
 
 import "google/api/annotations.proto";
 import "validate/validate.proto";
 
 option go_package = "pkg/book-service;book_service";
 
-service BookService {
-  rpc CreateBook (CreateBookRequest) returns (CreateBookResponse) {
+service ProductService {
+  rpc CreateProduct (CreateProductRequest) returns (CreateProductResponse) {
     option (google.api.http) = {
       post: "/books/create"
-      body: "*"
-    };
-  }
-  rpc DeleteBook (DeleteBookRequest) returns (DeleteBookResponse) {
-    option (google.api.http) = {
-      post: "/books/delete"
-      body: "*"
-    };
-  }
-  rpc GetBook (GetBookRequest) returns (GetBookResponse) {
-    option (google.api.http) = {
-      post: "/books/get"
       body: "*"
     };
   }
@@ -34,26 +22,11 @@ message Book {
   int64 category_id = 3;
 }
 
-message CreateBookRequest {
+message CreateProductRequest {
   string name = 1 [(validate.rules).string = { min_len: 2, max_len: 100 }];
   int64 category_id = 2 [(validate.rules).int64.gt = 0];
-  repeated BookAttribute attributes = 3;
 }
 
-message CreateBookResponse {
+message CreateProductResponse {
   Book result = 1;
-}
-
-message DeleteBookRequest {
-  repeated int64 book_ids = 1 [(validate.rules).repeated.items.int64.gt = 0];
-}
-
-message DeleteBookResponse {}
-
-message GetBookRequest {
-  repeated int64 book_ids = 1 [(validate.rules).repeated.items.int64.gt = 0];
-}
-
-message GetBookResponse {
-  repeated Book books = 1;
 }

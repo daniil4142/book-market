@@ -1,6 +1,6 @@
 # Builder
 
-ARG GITHUB_PATH=github.com/book-market/book-service
+ARG GITHUB_PATH=github.com/daniil4142/book-market/book-service
 
 FROM golang:1.23-alpine AS builder
 RUN apk add --update make git protoc protobuf protobuf-dev curl

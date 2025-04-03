@@ -8,14 +8,22 @@ import (
 	"github.com/rs/zerolog/log"
 	"google.golang.org/grpc"
 
-	"github.com/daniil4142/book-market//book-service/internal/config"
+	_ "github.com/jackc/pgx/v4"
+	_ "github.com/jackc/pgx/v4/stdlib"
+	_ "github.com/lib/pq"
+
+	grpc_category_service "github.com/daniil4142/book-market/category-service/pkg/category-service"
+
+	"github.com/daniil4142/book-market/book-service/internal/config"
+	mwclient "github.com/daniil4142/book-market/book-service/internal/pkg/mw/client"
+	"github.com/daniil4142/book-market/book-service/internal/server"
+	book_service "github.com/daniil4142/book-market/book-service/internal/service/book"
 )
 
 func main() {
 	if err := config.ReadConfigYML("config.yml"); err != nil {
 		log.Fatal().Err(err).Msg("Failed init configuration")
 	}
-
 	cfg := config.GetConfigInstance()
 
 	flag.Parse()
@@ -32,9 +40,9 @@ func main() {
 		zerolog.SetGlobalLevel(zerolog.DebugLevel)
 	}
 
-	bookServiceConn, err := grpc.DialContext(
+	categoryServiceConn, err := grpc.DialContext(
 		context.Background(),
-		cfg.BookServiceAddr,
+		cfg.CategoryServiceAddr,
 		grpc.WithInsecure(),
 		grpc.WithUnaryInterceptor(mwclient.AddAppInfoUnary),
 	)
@@ -42,11 +50,11 @@ func main() {
 		log.Error().Err(err).Msg("failed to create client")
 	}
 
-	bookServiceClient := grpc_book_service.NewCategoryServiceClient(bookServiceConn)
+	categoryServiceClient := grpc_category_service.NewCategoryServiceClient(categoryServiceConn)
 
-	productService := book_service.NewService(categoryServiceClient)
+	bookService := book_service.NewService(categoryServiceClient)
 
-	if err := server.NewGrpcServer(productService).Start(&cfg); err != nil {
+	if err := server.NewGrpcServer(bookService).Start(&cfg); err != nil {
 		log.Error().Err(err).Msg("Failed creating gRPC server")
 
 		return

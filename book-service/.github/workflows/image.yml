@@ -1,39 +1,48 @@
-name: coverage
+name: image
 
 on:
   push:
-    branches: [ main ]
-  pull_request:
-    branches: [ main ]
+    tags:
+      - "*"
 
 jobs:
-  coverage:
-    strategy:
-      matrix:
-        go-version: [1.23.x]
-        os: [ubuntu-latest]
-    runs-on: ${{ matrix.os }}
+  deploy:
+    name: Build
+    runs-on: ubuntu-latest
+    env:
+      IMAGE_NAME: docker.pkg.github.com/${{ github.repository }}
+      COMMIT_HASH: ${{ github.sha }}
+    environment: default
+
     steps:
-      - name: Install Go
-        uses: actions/setup-go@v2
+      - name: Set env version
+        run: echo "IMAGE_TAG=${GITHUB_REF#refs/*/}" >> $GITHUB_ENV
+
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v1
         with:
-          go-version: ${{ matrix.go-version }}
-      - name: Checkout code
-        uses: actions/checkout@v2
-      - name: Run coverage
-        run: |
-          go env -w CGO_ENABLED=1
-          go test -v -coverprofile="coverage.out" -covermode=atomic ./...
-          go tool cover -html="coverage.out" -o coverage.html
-      - name: Upload coverage to Codecov
-        uses: codecov/codecov-action@v1
+          platforms: all
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v1
+
+      - name: Login to Registry
+        uses: docker/login-action@v1
         with:
-          token: ${{ secrets.CODECOV_TOKEN }}
-          files: ./coverage.out
-          flags: unittests
-          name: codecov-umbrella
-      - name: Archive code coverage results
-        uses: actions/upload-artifact@v2
+          # registry: docker.pkg.github.com
+          registry: ghcr.io
+          username: ${{ github.repository_owner }}
+          password: ${{ secrets.CR_PAT }}
+
+      - name: Cache Docker layers
+        uses: actions/cache@v2
         with:
-          name: code-coverage-report
-          path: coverage.html
+          path: /tmp/.buildx-cache
+          key: ${{ runner.os }}-buildx-${{ github.sha }}
+          restore-keys: ${{ runner.os }}-buildx-
+
+      - uses: docker/build-push-action@v2
+        with:
+          push: true
+          # tags: <org-name>/<repo-name>/<app-name>:${{ env.IMAGE_TAG }}
+          tags: ghcr.io/${{ github.repository_owner }}/book-market/book-service/server:${{ env.IMAGE_TAG }}
