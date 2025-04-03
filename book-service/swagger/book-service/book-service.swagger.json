@@ -6,7 +6,7 @@
   },
   "tags": [
     {
-      "name": "ProductService"
+      "name": "BookService"
     }
   ],
   "consumes": [
@@ -18,12 +18,12 @@
   "paths": {
     "/books/create": {
       "post": {
-        "operationId": "ProductService_CreateProduct",
+        "operationId": "BookService_CreateBook",
         "responses": {
           "200": {
             "description": "A successful response.",
             "schema": {
-              "$ref": "#/definitions/v1CreateProductResponse"
+              "$ref": "#/definitions/v1CreateBookResponse"
             }
           },
           "default": {
@@ -39,12 +39,12 @@
             "in": "body",
             "required": true,
             "schema": {
-              "$ref": "#/definitions/v1CreateProductRequest"
+              "$ref": "#/definitions/v1CreateBookRequest"
             }
           }
         ],
         "tags": [
-          "ProductService"
+          "BookService"
         ]
       }
     }
@@ -96,7 +96,7 @@
         }
       }
     },
-    "v1CreateProductRequest": {
+    "v1CreateBookRequest": {
       "type": "object",
       "properties": {
         "name": {
@@ -108,7 +108,7 @@
         }
       }
     },
-    "v1CreateProductResponse": {
+    "v1CreateBookResponse": {
       "type": "object",
       "properties": {
         "result": {

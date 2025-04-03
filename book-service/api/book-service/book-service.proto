@@ -7,8 +7,8 @@ import "validate/validate.proto";
 
 option go_package = "pkg/book-service;book_service";
 
-service ProductService {
-  rpc CreateProduct (CreateProductRequest) returns (CreateProductResponse) {
+service BookService {
+  rpc CreateBook (CreateBookRequest) returns (CreateBookResponse) {
     option (google.api.http) = {
       post: "/books/create"
       body: "*"
@@ -22,11 +22,11 @@ message Book {
   int64 category_id = 3;
 }
 
-message CreateProductRequest {
+message CreateBookRequest {
   string name = 1 [(validate.rules).string = { min_len: 2, max_len: 100 }];
   int64 category_id = 2 [(validate.rules).int64.gt = 0];
 }
 
-message CreateProductResponse {
+message CreateBookResponse {
   Book result = 1;
 }

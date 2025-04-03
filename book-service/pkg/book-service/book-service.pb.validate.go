@@ -103,23 +103,23 @@ var _ interface {
 	ErrorName() string
 } = BookValidationError{}
 
-// Validate checks the field values on CreateProductRequest with the rules
-// defined in the proto definition for this message. If any rules are
-// violated, an error is returned.
-func (m *CreateProductRequest) Validate() error {
+// Validate checks the field values on CreateBookRequest with the rules defined
+// in the proto definition for this message. If any rules are violated, an
+// error is returned.
+func (m *CreateBookRequest) Validate() error {
 	if m == nil {
 		return nil
 	}
 
 	if l := utf8.RuneCountInString(m.GetName()); l < 2 || l > 100 {
-		return CreateProductRequestValidationError{
+		return CreateBookRequestValidationError{
 			field:  "Name",
 			reason: "value length must be between 2 and 100 runes, inclusive",
 		}
 	}
 
 	if m.GetCategoryId() <= 0 {
-		return CreateProductRequestValidationError{
+		return CreateBookRequestValidationError{
 			field:  "CategoryId",
 			reason: "value must be greater than 0",
 		}
@@ -128,9 +128,9 @@ func (m *CreateProductRequest) Validate() error {
 	return nil
 }
 
-// CreateProductRequestValidationError is the validation error returned by
-// CreateProductRequest.Validate if the designated constraints aren't met.
-type CreateProductRequestValidationError struct {
+// CreateBookRequestValidationError is the validation error returned by
+// CreateBookRequest.Validate if the designated constraints aren't met.
+type CreateBookRequestValidationError struct {
 	field  string
 	reason string
 	cause  error
@@ -138,24 +138,24 @@ type CreateProductRequestValidationError struct {
 }
 
 // Field function returns field value.
-func (e CreateProductRequestValidationError) Field() string { return e.field }
+func (e CreateBookRequestValidationError) Field() string { return e.field }
 
 // Reason function returns reason value.
-func (e CreateProductRequestValidationError) Reason() string { return e.reason }
+func (e CreateBookRequestValidationError) Reason() string { return e.reason }
 
 // Cause function returns cause value.
-func (e CreateProductRequestValidationError) Cause() error { return e.cause }
+func (e CreateBookRequestValidationError) Cause() error { return e.cause }
 
 // Key function returns key value.
-func (e CreateProductRequestValidationError) Key() bool { return e.key }
+func (e CreateBookRequestValidationError) Key() bool { return e.key }
 
 // ErrorName returns error name.
-func (e CreateProductRequestValidationError) ErrorName() string {
-	return "CreateProductRequestValidationError"
+func (e CreateBookRequestValidationError) ErrorName() string {
+	return "CreateBookRequestValidationError"
 }
 
 // Error satisfies the builtin error interface
-func (e CreateProductRequestValidationError) Error() string {
+func (e CreateBookRequestValidationError) Error() string {
 	cause := ""
 	if e.cause != nil {
 		cause = fmt.Sprintf(" | caused by: %v", e.cause)
@@ -167,14 +167,14 @@ func (e CreateProductRequestValidationError) Error() string {
 	}
 
 	return fmt.Sprintf(
-		"invalid %sCreateProductRequest.%s: %s%s",
+		"invalid %sCreateBookRequest.%s: %s%s",
 		key,
 		e.field,
 		e.reason,
 		cause)
 }
 
-var _ error = CreateProductRequestValidationError{}
+var _ error = CreateBookRequestValidationError{}
 
 var _ interface {
 	Field() string
@@ -182,19 +182,19 @@ var _ interface {
 	Key() bool
 	Cause() error
 	ErrorName() string
-} = CreateProductRequestValidationError{}
+} = CreateBookRequestValidationError{}
 
-// Validate checks the field values on CreateProductResponse with the rules
+// Validate checks the field values on CreateBookResponse with the rules
 // defined in the proto definition for this message. If any rules are
 // violated, an error is returned.
-func (m *CreateProductResponse) Validate() error {
+func (m *CreateBookResponse) Validate() error {
 	if m == nil {
 		return nil
 	}
 
 	if v, ok := interface{}(m.GetResult()).(interface{ Validate() error }); ok {
 		if err := v.Validate(); err != nil {
-			return CreateProductResponseValidationError{
+			return CreateBookResponseValidationError{
 				field:  "Result",
 				reason: "embedded message failed validation",
 				cause:  err,
@@ -205,9 +205,9 @@ func (m *CreateProductResponse) Validate() error {
 	return nil
 }
 
-// CreateProductResponseValidationError is the validation error returned by
-// CreateProductResponse.Validate if the designated constraints aren't met.
-type CreateProductResponseValidationError struct {
+// CreateBookResponseValidationError is the validation error returned by
+// CreateBookResponse.Validate if the designated constraints aren't met.
+type CreateBookResponseValidationError struct {
 	field  string
 	reason string
 	cause  error
@@ -215,24 +215,24 @@ type CreateProductResponseValidationError struct {
 }
 
 // Field function returns field value.
-func (e CreateProductResponseValidationError) Field() string { return e.field }
+func (e CreateBookResponseValidationError) Field() string { return e.field }
 
 // Reason function returns reason value.
-func (e CreateProductResponseValidationError) Reason() string { return e.reason }
+func (e CreateBookResponseValidationError) Reason() string { return e.reason }
 
 // Cause function returns cause value.
-func (e CreateProductResponseValidationError) Cause() error { return e.cause }
+func (e CreateBookResponseValidationError) Cause() error { return e.cause }
 
 // Key function returns key value.
-func (e CreateProductResponseValidationError) Key() bool { return e.key }
+func (e CreateBookResponseValidationError) Key() bool { return e.key }
 
 // ErrorName returns error name.
-func (e CreateProductResponseValidationError) ErrorName() string {
-	return "CreateProductResponseValidationError"
+func (e CreateBookResponseValidationError) ErrorName() string {
+	return "CreateBookResponseValidationError"
 }
 
 // Error satisfies the builtin error interface
-func (e CreateProductResponseValidationError) Error() string {
+func (e CreateBookResponseValidationError) Error() string {
 	cause := ""
 	if e.cause != nil {
 		cause = fmt.Sprintf(" | caused by: %v", e.cause)
@@ -244,14 +244,14 @@ func (e CreateProductResponseValidationError) Error() string {
 	}
 
 	return fmt.Sprintf(
-		"invalid %sCreateProductResponse.%s: %s%s",
+		"invalid %sCreateBookResponse.%s: %s%s",
 		key,
 		e.field,
 		e.reason,
 		cause)
 }
 
-var _ error = CreateProductResponseValidationError{}
+var _ error = CreateBookResponseValidationError{}
 
 var _ interface {
 	Field() string
@@ -259,4 +259,4 @@ var _ interface {
 	Key() bool
 	Cause() error
 	ErrorName() string
-} = CreateProductResponseValidationError{}
+} = CreateBookResponseValidationError{}

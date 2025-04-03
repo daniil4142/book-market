@@ -50,7 +50,7 @@ message Http {
 // [Cloud Endpoints](https://cloud.google.com/endpoints), [gRPC
 // Gateway](https://github.com/grpc-ecosystem/grpc-gateway),
 // and [Envoy](https://github.com/envoyproxy/envoy) proxy support this feature
-// and use it for large scale production services.
+// and use it for large scale bookion services.
 //
 // `HttpRule` defines the schema of the gRPC/REST mapping. The mapping specifies
 // how different portions of the gRPC request message are mapped to the URL
@@ -263,7 +263,7 @@ message Http {
 // ## Using gRPC API Service Configuration
 //
 // gRPC API Service Configuration (service config) is a configuration language
-// for configuring a gRPC service to become a user-facing product. The
+// for configuring a gRPC service to become a user-facing book. The
 // service config is simply the YAML representation of the `google.api.Service`
 // proto message.
 //

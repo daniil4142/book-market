@@ -10,8 +10,8 @@ import (
 	"google.golang.org/grpc/status"
 )
 
-func (i *Implementation) CreateProduct(ctx context.Context, req *desc.CreateProductRequest) (*desc.CreateProductResponse, error) {
-	res, err := i.bookService.CreateProduct(ctx, req.GetName(), req.GetCategoryId())
+func (i *Implementation) CreateBook(ctx context.Context, req *desc.CreateBookRequest) (*desc.CreateBookResponse, error) {
+	res, err := i.bookService.CreateBook(ctx, req.GetName(), req.GetCategoryId())
 	if err != nil {
 		if err == book_service.ErrWrongCategory {
 			details := &errdetails.BadRequest{
@@ -36,12 +36,12 @@ func (i *Implementation) CreateProduct(ctx context.Context, req *desc.CreateProd
 		return nil, err
 	}
 
-	return &desc.CreateProductResponse{
-		Result: convertProductToPb(res),
+	return &desc.CreateBookResponse{
+		Result: convertBookToPb(res),
 	}, nil
 }
 
-func convertProductToPb(res *book_service.Book) *desc.Book {
+func convertBookToPb(res *book_service.Book) *desc.Book {
 	return &desc.Book{
 		Id:         res.ID,
 		Name:       res.Name,
