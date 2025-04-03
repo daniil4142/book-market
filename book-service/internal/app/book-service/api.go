@@ -6,11 +6,11 @@ import (
 )
 
 type Implementation struct {
-	desc.UnimplementedProductServiceServer
+	desc.UnimplementedBookServiceServer
 	bookService *book_service.Service
 }
 
-func NewProductService(bookService *book_service.Service) desc.BookServiceServer {
+func NewBookService(bookService *book_service.Service) desc.BookServiceServer {
 	return &Implementation{
 		bookService: bookService,
 	}

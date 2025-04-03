@@ -34,7 +34,7 @@ func (m *MockIRepository) EXPECT() *MockIRepositoryMockRecorder {
 	return m.recorder
 }
 
-// SaveProduct mocks base method.
+// SaveBook mocks base method.
 func (m *MockIRepository) SaveBook(arg0 context.Context, arg1 *Book) error {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "SaveBook", arg0, arg1)
@@ -42,7 +42,7 @@ func (m *MockIRepository) SaveBook(arg0 context.Context, arg1 *Book) error {
 	return ret0
 }
 
-// SaveProduct indicates an expected call of SaveBook.
+// SaveBook indicates an expected call of SaveBook.
 func (mr *MockIRepositoryMockRecorder) SaveBook(arg0, arg1 interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "SaveBook", reflect.TypeOf((*MockIRepository)(nil).SaveBook), arg0, arg1)
