@@ -1,12 +1,12 @@
 package main
 
 import (
-	"context"
 	"flag"
 
 	"github.com/rs/zerolog"
 	"github.com/rs/zerolog/log"
 	"google.golang.org/grpc"
+	"google.golang.org/grpc/credentials/insecure"
 
 	_ "github.com/jackc/pgx/v4"
 	_ "github.com/jackc/pgx/v4/stdlib"
@@ -40,11 +40,17 @@ func main() {
 		zerolog.SetGlobalLevel(zerolog.DebugLevel)
 	}
 
-	categoryServiceConn, err := grpc.DialContext(
-		context.Background(),
+	// categoryServiceConn, err := grpc.DialContext(
+	// 	context.Background(),
+	// 	cfg.CategoryServiceAddr,
+	// 	grpc.WithInsecure(),
+	// 	grpc.WithUnaryInterceptor(mwclient.AddAppInfoUnary),
+	// )
+
+	categoryServiceConn, err := grpc.NewClient(
 		cfg.CategoryServiceAddr,
-		grpc.WithInsecure(),
 		grpc.WithUnaryInterceptor(mwclient.AddAppInfoUnary),
+		grpc.WithTransportCredentials(insecure.NewCredentials()),
 	)
 	if err != nil {
 		log.Error().Err(err).Msg("failed to create client")

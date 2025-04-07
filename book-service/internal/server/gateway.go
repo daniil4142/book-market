@@ -9,6 +9,7 @@ import (
 	"github.com/opentracing/opentracing-go"
 	"github.com/rs/zerolog/log"
 	"google.golang.org/grpc"
+	"google.golang.org/grpc/credentials/insecure"
 
 	desc "github.com/daniil4142/book-market/book-service/pkg/book-service"
 )
@@ -16,15 +17,25 @@ import (
 func createGatewayServer(grpcAddr, gatewayAddr string, allowedOrigins []string) *http.Server {
 	// Create a client connection to the gRPC Server we just started.
 	// This is where the gRPC-Gateway proxies the requests.
-	conn, err := grpc.DialContext(
-		context.Background(),
+	// conn, err := grpc.DialContext(
+	// 	context.Background(),
+	// 	grpcAddr,
+	// 	grpc.WithUnaryInterceptor(
+	// 		grpc_opentracing.UnaryClientInterceptor(
+	// 			grpc_opentracing.WithTracer(opentracing.GlobalTracer()),
+	// 		),
+	// 	),
+	// 	grpc.WithInsecure(),
+	// )
+
+	conn, err := grpc.NewClient(
 		grpcAddr,
 		grpc.WithUnaryInterceptor(
 			grpc_opentracing.UnaryClientInterceptor(
 				grpc_opentracing.WithTracer(opentracing.GlobalTracer()),
 			),
 		),
-		grpc.WithInsecure(),
+		grpc.WithTransportCredentials(insecure.NewCredentials()),
 	)
 	if err != nil {
 		log.Fatal().Err(err).Msg("Failed to dial server")

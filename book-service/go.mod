@@ -15,7 +15,7 @@ require (
 
 require (
 	github.com/daniil4142/book-market/book-service/pkg/book-service v0.0.0-20250403131847-11888019c45f
-	github.com/daniil4142/book-market/category-service/pkg/category-service v0.0.0-20250403205243-637a0e71a2be
+	github.com/daniil4142/book-market/category-service/pkg/category-service v0.0.0-20250407160536-1fe3849c7f4b
 	github.com/golang/mock v1.6.0
 	github.com/stretchr/testify v1.7.0
 	google.golang.org/protobuf v1.36.6
