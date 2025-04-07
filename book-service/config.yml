@@ -1,5 +1,5 @@
 project:
-  name: Book MarketPlace
+  name: Book Service
   debug: true
   environment: development
 
@@ -23,4 +23,4 @@ swagger:
   port: 6001
   filepath: "swagger/book-service/book-service.swagger.json"
 
-categoryServiceAddr: "http://localhost:8002"
+categoryServiceAddr: "http://localhost:7002"

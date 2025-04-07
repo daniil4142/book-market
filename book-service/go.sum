@@ -20,8 +20,8 @@ github.com/creack/pty v1.1.7/go.mod h1:lj5s0c3V2DBrqTV7llrYr5NG6My20zk30Fl46Y7Do
 github.com/creack/pty v1.1.9/go.mod h1:oKZEueFk5CKHvIhNR5MUki03XCEU+Q6VDXinZuGJ33E=
 github.com/daniil4142/book-market/book-service/pkg/book-service v0.0.0-20250403131847-11888019c45f h1:236QQCIn5FtP3WoYvYCAtMBjdx5YZKTrYDdFZ9RF2Bw=
 github.com/daniil4142/book-market/book-service/pkg/book-service v0.0.0-20250403131847-11888019c45f/go.mod h1:MoE7Huf8amNler4aCcH2KigqbCCEI1uQJlQqRvIvtDw=
-github.com/daniil4142/book-market/category-service/pkg/category-service v0.0.0-20250403123149-8c7c9a94c87d h1:rZVUM4WnjJXkCPvCHJYLtv5Y0UqE8EIXQSxuAhUWY0I=
-github.com/daniil4142/book-market/category-service/pkg/category-service v0.0.0-20250403123149-8c7c9a94c87d/go.mod h1:vcSeNnuz0bKTq6XKqw1Ik7NAvrnn0NtzQZXH7EJ0XJQ=
+github.com/daniil4142/book-market/category-service/pkg/category-service v0.0.0-20250403205243-637a0e71a2be h1:QQfo692iy8bLUtuy5fPrzMLKHmwl/wJl+09FkcYd8bM=
+github.com/daniil4142/book-market/category-service/pkg/category-service v0.0.0-20250403205243-637a0e71a2be/go.mod h1:vcSeNnuz0bKTq6XKqw1Ik7NAvrnn0NtzQZXH7EJ0XJQ=
 github.com/davecgh/go-spew v1.1.0/go.mod h1:J7Y8YcW2NihsgmVo/mv3lAwl/skON4iLHjSsI+c5H38=
 github.com/davecgh/go-spew v1.1.1 h1:vj9j/u1bqnvCEfJOwUhtlOARqs3+rkHYY13jYWTU97c=
 github.com/davecgh/go-spew v1.1.1/go.mod h1:J7Y8YcW2NihsgmVo/mv3lAwl/skON4iLHjSsI+c5H38=

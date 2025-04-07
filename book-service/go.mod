@@ -15,10 +15,10 @@ require (
 
 require (
 	github.com/daniil4142/book-market/book-service/pkg/book-service v0.0.0-20250403131847-11888019c45f
-	github.com/daniil4142/book-market/category-service/pkg/category-service v0.0.0-20250403123149-8c7c9a94c87d
+	github.com/daniil4142/book-market/category-service/pkg/category-service v0.0.0-20250403205243-637a0e71a2be
 	github.com/golang/mock v1.6.0
 	github.com/stretchr/testify v1.7.0
-	google.golang.org/genproto v0.0.0-20211029142109-e255c875f7c7
+	google.golang.org/protobuf v1.36.6
 )
 
 require (
@@ -38,5 +38,5 @@ require (
 	golang.org/x/net v0.38.0 // indirect
 	golang.org/x/sys v0.31.0 // indirect
 	golang.org/x/text v0.23.0 // indirect
-	google.golang.org/protobuf v1.36.6 // indirect
+	google.golang.org/genproto v0.0.0-20211029142109-e255c875f7c7 // indirect
 )
