@@ -8,12 +8,7 @@ import "validate/validate.proto";
 option go_package = "pkg/book-service;book_service";
 
 service BookService {
-  rpc CreateBook (CreateBookRequest) returns (CreateBookResponse) {
-    option (google.api.http) = {
-      post: "/books/create"
-      body: "*"
-    };
-  }
+  rpc CreateBook (CreateBookRequest) returns (CreateBookResponse);
 }
 
 message Book {

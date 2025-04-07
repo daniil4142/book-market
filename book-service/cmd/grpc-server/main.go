@@ -40,13 +40,6 @@ func main() {
 		zerolog.SetGlobalLevel(zerolog.DebugLevel)
 	}
 
-	// categoryServiceConn, err := grpc.DialContext(
-	// 	context.Background(),
-	// 	cfg.CategoryServiceAddr,
-	// 	grpc.WithInsecure(),
-	// 	grpc.WithUnaryInterceptor(mwclient.AddAppInfoUnary),
-	// )
-
 	categoryServiceConn, err := grpc.NewClient(
 		cfg.CategoryServiceAddr,
 		grpc.WithUnaryInterceptor(mwclient.AddAppInfoUnary),

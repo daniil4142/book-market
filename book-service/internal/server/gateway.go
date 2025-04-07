@@ -17,16 +17,6 @@ import (
 func createGatewayServer(grpcAddr, gatewayAddr string, allowedOrigins []string) *http.Server {
 	// Create a client connection to the gRPC Server we just started.
 	// This is where the gRPC-Gateway proxies the requests.
-	// conn, err := grpc.DialContext(
-	// 	context.Background(),
-	// 	grpcAddr,
-	// 	grpc.WithUnaryInterceptor(
-	// 		grpc_opentracing.UnaryClientInterceptor(
-	// 			grpc_opentracing.WithTracer(opentracing.GlobalTracer()),
-	// 		),
-	// 	),
-	// 	grpc.WithInsecure(),
-	// )
 
 	conn, err := grpc.NewClient(
 		grpcAddr,

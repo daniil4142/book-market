@@ -36,14 +36,14 @@ func (s *Service) CreateBook(
 	name string,
 	categoryID int64,
 ) (*Book, error) {
-	exists, err := s.client.IsCategoryExists(ctx, categoryID)
-	if err != nil {
-		return nil, err
-	}
+	// exists, err := s.client.IsCategoryExists(ctx, categoryID)
+	// if err != nil {
+	// 	return nil, err
+	// }
 
-	if !exists {
-		return nil, ErrWrongCategory
-	}
+	// if !exists {
+	// 	return nil, ErrWrongCategory
+	// }
 
 	book := &Book{
 		Name:       name,
