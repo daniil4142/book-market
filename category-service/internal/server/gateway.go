@@ -56,12 +56,12 @@ func cors(h http.Handler, allowedOrigins []string) http.Handler {
 
 		if matches {
 			w.Header().Set("Access-Control-Allow-Origin", providedOrigin)
-			w.Header().Set("Access-Control-Allow-Methods", "GET, POST, PATCH, DELETE")
+			w.Header().Set("Access-Control-Allow-Methods", "GET, POST, PATCH, DELETE, OPTIONS")
 			w.Header().Set("Access-Control-Allow-Headers", "Accept, Content-Type, Content-Length, Accept-Encoding, Authorization, ResponseType")
 		}
-		if r.Method == "OPTIONS" {
-			return
-		}
+		// if r.Method == "OPTIONS" {
+		// 	return
+		// }
 		h.ServeHTTP(w, r)
 	})
 }
