@@ -6,7 +6,7 @@ GRPC_METHOD="daniil4142.book_market.book_service.v1.BookService/CreateBook"
 payload=$(
   cat <<EOF
 {
-  "categoryId": "2",
+  "categoryId": "3",
   "name": "Hello"
 }
 EOF

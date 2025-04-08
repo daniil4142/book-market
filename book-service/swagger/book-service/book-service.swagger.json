@@ -16,7 +16,7 @@
     "application/json"
   ],
   "paths": {
-    "/daniil4142.book_market.book_service.v1.BookService/CreateBook": {
+    "/books/create": {
       "post": {
         "operationId": "BookService_CreateBook",
         "responses": {

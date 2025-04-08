@@ -77,7 +77,7 @@ func RegisterBookServiceHandlerServer(ctx context.Context, mux *runtime.ServeMux
 		var stream runtime.ServerTransportStream
 		ctx = grpc.NewContextWithServerTransportStream(ctx, &stream)
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		rctx, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/daniil4142.book_market.book_service.v1.BookService/CreateBook", runtime.WithHTTPPathPattern("/daniil4142.book_market.book_service.v1.BookService/CreateBook"))
+		rctx, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/daniil4142.book_market.book_service.v1.BookService/CreateBook", runtime.WithHTTPPathPattern("/books/create"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
@@ -139,7 +139,7 @@ func RegisterBookServiceHandlerClient(ctx context.Context, mux *runtime.ServeMux
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		rctx, err := runtime.AnnotateContext(ctx, mux, req, "/daniil4142.book_market.book_service.v1.BookService/CreateBook", runtime.WithHTTPPathPattern("/daniil4142.book_market.book_service.v1.BookService/CreateBook"))
+		rctx, err := runtime.AnnotateContext(ctx, mux, req, "/daniil4142.book_market.book_service.v1.BookService/CreateBook", runtime.WithHTTPPathPattern("/books/create"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
@@ -159,7 +159,7 @@ func RegisterBookServiceHandlerClient(ctx context.Context, mux *runtime.ServeMux
 }
 
 var (
-	pattern_BookService_CreateBook_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1}, []string{"daniil4142.book_market.book_service.v1.BookService", "CreateBook"}, ""))
+	pattern_BookService_CreateBook_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1}, []string{"books", "create"}, ""))
 )
 
 var (
