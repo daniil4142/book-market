@@ -1,6 +1,6 @@
 #!/bin/sh
 
-GRPC_HOST="localhost:6002"
+GRPC_HOST="localhost:8002"
 GRPC_METHOD="daniil4142.book_market.book_service.v1.BookService/CreateBook"
 
 payload=$(
