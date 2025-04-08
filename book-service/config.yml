@@ -32,4 +32,4 @@ swagger:
   port: 8001
   filepath: "swagger/book-service/book-service.swagger.json"
 
-categoryServiceAddr: "http://localhost:7002"
+categoryServiceAddr: "localhost:7002"

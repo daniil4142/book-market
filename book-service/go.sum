@@ -22,6 +22,8 @@ github.com/daniil4142/book-market/book-service/pkg/book-service v0.0.0-202504031
 github.com/daniil4142/book-market/book-service/pkg/book-service v0.0.0-20250403131847-11888019c45f/go.mod h1:MoE7Huf8amNler4aCcH2KigqbCCEI1uQJlQqRvIvtDw=
 github.com/daniil4142/book-market/category-service/pkg/category-service v0.0.0-20250407160536-1fe3849c7f4b h1:vCpDUOnUgHGssjNwTDaRHg2vDIIz3zPXZTFUS7z113A=
 github.com/daniil4142/book-market/category-service/pkg/category-service v0.0.0-20250407160536-1fe3849c7f4b/go.mod h1:vcSeNnuz0bKTq6XKqw1Ik7NAvrnn0NtzQZXH7EJ0XJQ=
+github.com/daniil4142/book-market/category-service/pkg/category-service v0.0.0-20250408123310-f2c77d3a3ca8 h1:RE7x/BECU+KGx/N6uw1lQVZ6NlMvpZmQE+ddgS71awM=
+github.com/daniil4142/book-market/category-service/pkg/category-service v0.0.0-20250408123310-f2c77d3a3ca8/go.mod h1:vcSeNnuz0bKTq6XKqw1Ik7NAvrnn0NtzQZXH7EJ0XJQ=
 github.com/davecgh/go-spew v1.1.0/go.mod h1:J7Y8YcW2NihsgmVo/mv3lAwl/skON4iLHjSsI+c5H38=
 github.com/davecgh/go-spew v1.1.1 h1:vj9j/u1bqnvCEfJOwUhtlOARqs3+rkHYY13jYWTU97c=
 github.com/davecgh/go-spew v1.1.1/go.mod h1:J7Y8YcW2NihsgmVo/mv3lAwl/skON4iLHjSsI+c5H38=
