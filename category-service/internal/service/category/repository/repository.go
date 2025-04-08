@@ -4,29 +4,33 @@ import (
 	"context"
 
 	"github.com/daniil4142/book-market/category-service/internal/service/category"
+	"github.com/jmoiron/sqlx"
+	"github.com/pkg/errors"
 )
 
-var categories = category.Categories{
-	{
-		ID:   1,
-		Name: "Fantasy",
-	},
-	{
-		ID:   2,
-		Name: "Sci-fi",
-	},
-	{
-		ID:   3,
-		Name: "Romance novel",
-	},
+type Repository struct {
+	db *sqlx.DB
 }
 
-type Repository struct{}
-
-func New( /* db */ ) *Repository {
-	return &Repository{}
+func New(db *sqlx.DB) Repository {
+	return Repository{db: db}
 }
 
-func (Repository) FindAllCategories(_ context.Context) (category.Categories, error) {
-	return categories, nil
+func (r Repository) FindAllCategories(ctx context.Context) (category.Categories, error) {
+	sb := database.StatementBuilder.
+		Select("id", "name").
+		From("category")
+
+	query, args, err := sb.ToSql()
+	if err != nil {
+		return nil, err
+	}
+
+	var cats category.Categories
+	err = r.db.SelectContext(ctx, &cats, query, args...)
+	if err != nil {
+		return nil, errors.Wrap(err, "db.SelectContext()")
+	}
+
+	return cats, nil
 }

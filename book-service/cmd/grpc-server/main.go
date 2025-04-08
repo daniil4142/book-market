@@ -10,11 +10,11 @@ import (
 
 	_ "github.com/jackc/pgx/v4"
 	_ "github.com/jackc/pgx/v4/stdlib"
-	_ "github.com/lib/pq"
 
 	grpc_category_service "github.com/daniil4142/book-market/category-service/pkg/category-service"
 
 	"github.com/daniil4142/book-market/book-service/internal/config"
+	"github.com/daniil4142/book-market/book-service/internal/pkg/db"
 	mwclient "github.com/daniil4142/book-market/book-service/internal/pkg/mw/client"
 	"github.com/daniil4142/book-market/book-service/internal/server"
 	book_service "github.com/daniil4142/book-market/book-service/internal/service/book"
@@ -49,9 +49,15 @@ func main() {
 		log.Error().Err(err).Msg("failed to create client")
 	}
 
+	conn, err := db.ConnectDB(&cfg.DB)
+	if err != nil {
+		log.Fatal().Err(err).Msg("sql.Open() error")
+	}
+	defer conn.Close()
+
 	categoryServiceClient := grpc_category_service.NewCategoryServiceClient(categoryServiceConn)
 
-	bookService := book_service.NewService(categoryServiceClient)
+	bookService := book_service.NewService(categoryServiceClient, conn)
 
 	if err := server.NewGrpcServer(bookService).Start(&cfg); err != nil {
 		log.Error().Err(err).Msg("Failed creating gRPC server")

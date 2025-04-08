@@ -5,6 +5,7 @@ import (
 	"errors"
 
 	category_service "github.com/daniil4142/book-market/category-service/pkg/category-service"
+	"github.com/jmoiron/sqlx"
 )
 
 var ErrWrongCategory = errors.New("category does not exist")
@@ -12,7 +13,7 @@ var ErrWrongCategory = errors.New("category does not exist")
 //go:generate mockgen -package=book_service -destination=service_mocks_test.go -self_package=github.com/daniil4142/book-market/book-service/internal/service/book . IRepository,ICategoryClient
 
 type IRepository interface {
-	SaveBook(ctx context.Context, book *Book) error
+	SaveBook(ctx context.Context, book *Book) (int64, error)
 }
 
 type ICategoryClient interface {
@@ -24,9 +25,9 @@ type Service struct {
 	client ICategoryClient
 }
 
-func NewService(grpcClient category_service.CategoryServiceClient) *Service {
+func NewService(grpcClient category_service.CategoryServiceClient, db *sqlx.DB) *Service {
 	return &Service{
-		repo:   newRepo(),
+		repo:   newRepo(db),
 		client: newClient(grpcClient),
 	}
 }
@@ -50,8 +51,10 @@ func (s *Service) CreateBook(
 		CategoryID: categoryID,
 	}
 
-	if err := s.repo.SaveBook(ctx, book); err != nil {
+	if id, err := s.repo.SaveBook(ctx, book); err != nil {
 		return nil, err
+	} else {
+		book.ID = id
 	}
 
 	return book, nil
