@@ -11,6 +11,7 @@ import (
 	"net/mail"
 	"net/url"
 	"regexp"
+	"sort"
 	"strings"
 	"time"
 	"unicode/utf8"
@@ -31,14 +32,29 @@ var (
 	_ = (*url.URL)(nil)
 	_ = (*mail.Address)(nil)
 	_ = anypb.Any{}
+	_ = sort.Sort
 )
 
 // Validate checks the field values on Book with the rules defined in the proto
-// definition for this message. If any rules are violated, an error is returned.
+// definition for this message. If any rules are violated, the first error
+// encountered is returned, or nil if there are no violations.
 func (m *Book) Validate() error {
+	return m.validate(false)
+}
+
+// ValidateAll checks the field values on Book with the rules defined in the
+// proto definition for this message. If any rules are violated, the result is
+// a list of violation errors wrapped in BookMultiError, or nil if none found.
+func (m *Book) ValidateAll() error {
+	return m.validate(true)
+}
+
+func (m *Book) validate(all bool) error {
 	if m == nil {
 		return nil
 	}
+
+	var errors []error
 
 	// no validation rules for Id
 
@@ -46,8 +62,28 @@ func (m *Book) Validate() error {
 
 	// no validation rules for CategoryId
 
+	if len(errors) > 0 {
+		return BookMultiError(errors)
+	}
+
 	return nil
 }
+
+// BookMultiError is an error wrapping multiple validation errors returned by
+// Book.ValidateAll() if the designated constraints aren't met.
+type BookMultiError []error
+
+// Error returns a concatenation of all the error messages it wraps.
+func (m BookMultiError) Error() string {
+	msgs := make([]string, 0, len(m))
+	for _, err := range m {
+		msgs = append(msgs, err.Error())
+	}
+	return strings.Join(msgs, "; ")
+}
+
+// AllErrors returns a list of validation violation errors.
+func (m BookMultiError) AllErrors() []error { return m }
 
 // BookValidationError is the validation error returned by Book.Validate if the
 // designated constraints aren't met.
@@ -104,29 +140,72 @@ var _ interface {
 } = BookValidationError{}
 
 // Validate checks the field values on CreateBookRequest with the rules defined
-// in the proto definition for this message. If any rules are violated, an
-// error is returned.
+// in the proto definition for this message. If any rules are violated, the
+// first error encountered is returned, or nil if there are no violations.
 func (m *CreateBookRequest) Validate() error {
+	return m.validate(false)
+}
+
+// ValidateAll checks the field values on CreateBookRequest with the rules
+// defined in the proto definition for this message. If any rules are
+// violated, the result is a list of violation errors wrapped in
+// CreateBookRequestMultiError, or nil if none found.
+func (m *CreateBookRequest) ValidateAll() error {
+	return m.validate(true)
+}
+
+func (m *CreateBookRequest) validate(all bool) error {
 	if m == nil {
 		return nil
 	}
 
+	var errors []error
+
 	if l := utf8.RuneCountInString(m.GetName()); l < 2 || l > 100 {
-		return CreateBookRequestValidationError{
+		err := CreateBookRequestValidationError{
 			field:  "Name",
 			reason: "value length must be between 2 and 100 runes, inclusive",
 		}
+		if !all {
+			return err
+		}
+		errors = append(errors, err)
 	}
 
 	if m.GetCategoryId() <= 0 {
-		return CreateBookRequestValidationError{
+		err := CreateBookRequestValidationError{
 			field:  "CategoryId",
 			reason: "value must be greater than 0",
 		}
+		if !all {
+			return err
+		}
+		errors = append(errors, err)
+	}
+
+	if len(errors) > 0 {
+		return CreateBookRequestMultiError(errors)
 	}
 
 	return nil
 }
+
+// CreateBookRequestMultiError is an error wrapping multiple validation errors
+// returned by CreateBookRequest.ValidateAll() if the designated constraints
+// aren't met.
+type CreateBookRequestMultiError []error
+
+// Error returns a concatenation of all the error messages it wraps.
+func (m CreateBookRequestMultiError) Error() string {
+	msgs := make([]string, 0, len(m))
+	for _, err := range m {
+		msgs = append(msgs, err.Error())
+	}
+	return strings.Join(msgs, "; ")
+}
+
+// AllErrors returns a list of validation violation errors.
+func (m CreateBookRequestMultiError) AllErrors() []error { return m }
 
 // CreateBookRequestValidationError is the validation error returned by
 // CreateBookRequest.Validate if the designated constraints aren't met.
@@ -186,13 +265,46 @@ var _ interface {
 
 // Validate checks the field values on CreateBookResponse with the rules
 // defined in the proto definition for this message. If any rules are
-// violated, an error is returned.
+// violated, the first error encountered is returned, or nil if there are no violations.
 func (m *CreateBookResponse) Validate() error {
+	return m.validate(false)
+}
+
+// ValidateAll checks the field values on CreateBookResponse with the rules
+// defined in the proto definition for this message. If any rules are
+// violated, the result is a list of violation errors wrapped in
+// CreateBookResponseMultiError, or nil if none found.
+func (m *CreateBookResponse) ValidateAll() error {
+	return m.validate(true)
+}
+
+func (m *CreateBookResponse) validate(all bool) error {
 	if m == nil {
 		return nil
 	}
 
-	if v, ok := interface{}(m.GetResult()).(interface{ Validate() error }); ok {
+	var errors []error
+
+	if all {
+		switch v := interface{}(m.GetResult()).(type) {
+		case interface{ ValidateAll() error }:
+			if err := v.ValidateAll(); err != nil {
+				errors = append(errors, CreateBookResponseValidationError{
+					field:  "Result",
+					reason: "embedded message failed validation",
+					cause:  err,
+				})
+			}
+		case interface{ Validate() error }:
+			if err := v.Validate(); err != nil {
+				errors = append(errors, CreateBookResponseValidationError{
+					field:  "Result",
+					reason: "embedded message failed validation",
+					cause:  err,
+				})
+			}
+		}
+	} else if v, ok := interface{}(m.GetResult()).(interface{ Validate() error }); ok {
 		if err := v.Validate(); err != nil {
 			return CreateBookResponseValidationError{
 				field:  "Result",
@@ -202,8 +314,29 @@ func (m *CreateBookResponse) Validate() error {
 		}
 	}
 
+	if len(errors) > 0 {
+		return CreateBookResponseMultiError(errors)
+	}
+
 	return nil
 }
+
+// CreateBookResponseMultiError is an error wrapping multiple validation errors
+// returned by CreateBookResponse.ValidateAll() if the designated constraints
+// aren't met.
+type CreateBookResponseMultiError []error
+
+// Error returns a concatenation of all the error messages it wraps.
+func (m CreateBookResponseMultiError) Error() string {
+	msgs := make([]string, 0, len(m))
+	for _, err := range m {
+		msgs = append(msgs, err.Error())
+	}
+	return strings.Join(msgs, "; ")
+}
+
+// AllErrors returns a list of validation violation errors.
+func (m CreateBookResponseMultiError) AllErrors() []error { return m }
 
 // CreateBookResponseValidationError is the validation error returned by
 // CreateBookResponse.Validate if the designated constraints aren't met.

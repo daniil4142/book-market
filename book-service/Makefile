@@ -1,15 +1,12 @@
 GO_VERSION_SHORT:=$(shell echo `go version` | sed -E 's/.* go(.*) .*/\1/g')
-ifneq ("1.16","$(shell printf "$(GO_VERSION_SHORT)\n1.16" | sort -V | head -1)")
-$(error NEED GO VERSION >= 1.16. Found: $(GO_VERSION_SHORT))
+ifneq ("1.23","$(shell printf "$(GO_VERSION_SHORT)\n1.23" | sort -V | head -1)")
+$(error NEED GO VERSION >= 1.23. Found: $(GO_VERSION_SHORT))
 endif
 
 export GO111MODULE=on
 
 SERVICE_NAME=book-service
 SERVICE_PATH=daniil4142/book-market/book-service
-
-PGV_VERSION:="v0.6.1"
-BUF_VERSION:="v1.16.0"
 
 OS_NAME=$(shell uname -s)
 OS_ARCH=$(shell uname -m)
@@ -35,20 +32,23 @@ test:
 	go tool cover -func cover.out | grep total | awk '{print $$3}'
 
 # ----------------------------------------------------------------
+# .PHONY: generate
+# generate: .generate-install-buf .generate-go .generate-finalize-go
+
+# .generate-install-buf:
+# 	@ command -v buf 2>&1 > /dev/null || (echo "Install buf" && \
+#     		curl -sSL0 https://github.com/bufbuild/buf/releases/download/$(BUF_VERSION)/buf-$(OS_NAME)-$(OS_ARCH)$(shell go env GOEXE) --create-dirs -o "$(BUF_EXE)" && \
+#     		chmod +x "$(BUF_EXE)")
+
+# .generate-go:
+# 	$(BUF_EXE) generate
+
+# .generate-finalize-go:
+# 	cd pkg/$(SERVICE_NAME) && ls go.mod || (go mod init github.com/$(SERVICE_PATH)/pkg/$(SERVICE_NAME) && go mod tidy)
+
 .PHONY: generate
-generate: .generate-install-buf .generate-go .generate-finalize-go
-
-.generate-install-buf:
-	@ command -v buf 2>&1 > /dev/null || (echo "Install buf" && \
-    		curl -sSL0 https://github.com/bufbuild/buf/releases/download/$(BUF_VERSION)/buf-$(OS_NAME)-$(OS_ARCH)$(shell go env GOEXE) --create-dirs -o "$(BUF_EXE)" && \
-    		chmod +x "$(BUF_EXE)")
-
-.generate-go:
+generate:
 	$(BUF_EXE) generate
-
-.generate-finalize-go:
-	cd pkg/$(SERVICE_NAME) && ls go.mod || (go mod init github.com/$(SERVICE_PATH)/pkg/$(SERVICE_NAME) && go mod tidy)
-
 # ----------------------------------------------------------------
 
 .PHONY: deps

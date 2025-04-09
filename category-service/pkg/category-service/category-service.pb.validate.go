@@ -11,6 +11,7 @@ import (
 	"net/mail"
 	"net/url"
 	"regexp"
+	"sort"
 	"strings"
 	"time"
 	"unicode/utf8"
@@ -31,21 +32,57 @@ var (
 	_ = (*url.URL)(nil)
 	_ = (*mail.Address)(nil)
 	_ = anypb.Any{}
+	_ = sort.Sort
 )
 
 // Validate checks the field values on Category with the rules defined in the
-// proto definition for this message. If any rules are violated, an error is returned.
+// proto definition for this message. If any rules are violated, the first
+// error encountered is returned, or nil if there are no violations.
 func (m *Category) Validate() error {
+	return m.validate(false)
+}
+
+// ValidateAll checks the field values on Category with the rules defined in
+// the proto definition for this message. If any rules are violated, the
+// result is a list of violation errors wrapped in CategoryMultiError, or nil
+// if none found.
+func (m *Category) ValidateAll() error {
+	return m.validate(true)
+}
+
+func (m *Category) validate(all bool) error {
 	if m == nil {
 		return nil
 	}
+
+	var errors []error
 
 	// no validation rules for Id
 
 	// no validation rules for Name
 
+	if len(errors) > 0 {
+		return CategoryMultiError(errors)
+	}
+
 	return nil
 }
+
+// CategoryMultiError is an error wrapping multiple validation errors returned
+// by Category.ValidateAll() if the designated constraints aren't met.
+type CategoryMultiError []error
+
+// Error returns a concatenation of all the error messages it wraps.
+func (m CategoryMultiError) Error() string {
+	msgs := make([]string, 0, len(m))
+	for _, err := range m {
+		msgs = append(msgs, err.Error())
+	}
+	return strings.Join(msgs, "; ")
+}
+
+// AllErrors returns a list of validation violation errors.
+func (m CategoryMultiError) AllErrors() []error { return m }
 
 // CategoryValidationError is the validation error returned by
 // Category.Validate if the designated constraints aren't met.
@@ -103,21 +140,60 @@ var _ interface {
 
 // Validate checks the field values on GetCategoryByIdRequest with the rules
 // defined in the proto definition for this message. If any rules are
-// violated, an error is returned.
+// violated, the first error encountered is returned, or nil if there are no violations.
 func (m *GetCategoryByIdRequest) Validate() error {
+	return m.validate(false)
+}
+
+// ValidateAll checks the field values on GetCategoryByIdRequest with the rules
+// defined in the proto definition for this message. If any rules are
+// violated, the result is a list of violation errors wrapped in
+// GetCategoryByIdRequestMultiError, or nil if none found.
+func (m *GetCategoryByIdRequest) ValidateAll() error {
+	return m.validate(true)
+}
+
+func (m *GetCategoryByIdRequest) validate(all bool) error {
 	if m == nil {
 		return nil
 	}
 
+	var errors []error
+
 	if m.GetId() <= 0 {
-		return GetCategoryByIdRequestValidationError{
+		err := GetCategoryByIdRequestValidationError{
 			field:  "Id",
 			reason: "value must be greater than 0",
 		}
+		if !all {
+			return err
+		}
+		errors = append(errors, err)
+	}
+
+	if len(errors) > 0 {
+		return GetCategoryByIdRequestMultiError(errors)
 	}
 
 	return nil
 }
+
+// GetCategoryByIdRequestMultiError is an error wrapping multiple validation
+// errors returned by GetCategoryByIdRequest.ValidateAll() if the designated
+// constraints aren't met.
+type GetCategoryByIdRequestMultiError []error
+
+// Error returns a concatenation of all the error messages it wraps.
+func (m GetCategoryByIdRequestMultiError) Error() string {
+	msgs := make([]string, 0, len(m))
+	for _, err := range m {
+		msgs = append(msgs, err.Error())
+	}
+	return strings.Join(msgs, "; ")
+}
+
+// AllErrors returns a list of validation violation errors.
+func (m GetCategoryByIdRequestMultiError) AllErrors() []error { return m }
 
 // GetCategoryByIdRequestValidationError is the validation error returned by
 // GetCategoryByIdRequest.Validate if the designated constraints aren't met.
@@ -177,13 +253,46 @@ var _ interface {
 
 // Validate checks the field values on GetCategoryByIdResponse with the rules
 // defined in the proto definition for this message. If any rules are
-// violated, an error is returned.
+// violated, the first error encountered is returned, or nil if there are no violations.
 func (m *GetCategoryByIdResponse) Validate() error {
+	return m.validate(false)
+}
+
+// ValidateAll checks the field values on GetCategoryByIdResponse with the
+// rules defined in the proto definition for this message. If any rules are
+// violated, the result is a list of violation errors wrapped in
+// GetCategoryByIdResponseMultiError, or nil if none found.
+func (m *GetCategoryByIdResponse) ValidateAll() error {
+	return m.validate(true)
+}
+
+func (m *GetCategoryByIdResponse) validate(all bool) error {
 	if m == nil {
 		return nil
 	}
 
-	if v, ok := interface{}(m.GetCategory()).(interface{ Validate() error }); ok {
+	var errors []error
+
+	if all {
+		switch v := interface{}(m.GetCategory()).(type) {
+		case interface{ ValidateAll() error }:
+			if err := v.ValidateAll(); err != nil {
+				errors = append(errors, GetCategoryByIdResponseValidationError{
+					field:  "Category",
+					reason: "embedded message failed validation",
+					cause:  err,
+				})
+			}
+		case interface{ Validate() error }:
+			if err := v.Validate(); err != nil {
+				errors = append(errors, GetCategoryByIdResponseValidationError{
+					field:  "Category",
+					reason: "embedded message failed validation",
+					cause:  err,
+				})
+			}
+		}
+	} else if v, ok := interface{}(m.GetCategory()).(interface{ Validate() error }); ok {
 		if err := v.Validate(); err != nil {
 			return GetCategoryByIdResponseValidationError{
 				field:  "Category",
@@ -193,8 +302,29 @@ func (m *GetCategoryByIdResponse) Validate() error {
 		}
 	}
 
+	if len(errors) > 0 {
+		return GetCategoryByIdResponseMultiError(errors)
+	}
+
 	return nil
 }
+
+// GetCategoryByIdResponseMultiError is an error wrapping multiple validation
+// errors returned by GetCategoryByIdResponse.ValidateAll() if the designated
+// constraints aren't met.
+type GetCategoryByIdResponseMultiError []error
+
+// Error returns a concatenation of all the error messages it wraps.
+func (m GetCategoryByIdResponseMultiError) Error() string {
+	msgs := make([]string, 0, len(m))
+	for _, err := range m {
+		msgs = append(msgs, err.Error())
+	}
+	return strings.Join(msgs, "; ")
+}
+
+// AllErrors returns a list of validation violation errors.
+func (m GetCategoryByIdResponseMultiError) AllErrors() []error { return m }
 
 // GetCategoryByIdResponseValidationError is the validation error returned by
 // GetCategoryByIdResponse.Validate if the designated constraints aren't met.

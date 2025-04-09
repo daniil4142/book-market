@@ -4,6 +4,7 @@ import (
 	"context"
 
 	"github.com/daniil4142/book-market/category-service/internal/service/category"
+	"github.com/daniil4142/book-market/category-service/internal/service/database"
 	"github.com/jmoiron/sqlx"
 	"github.com/pkg/errors"
 )

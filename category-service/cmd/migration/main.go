@@ -5,6 +5,8 @@ import (
 	"log"
 
 	"github.com/daniil4142/book-market/category-service/internal/config"
+	"github.com/daniil4142/book-market/category-service/internal/service/database"
+	"github.com/daniil4142/book-market/category-service/migrations"
 	_ "github.com/jackc/pgx/v4/stdlib"
 	"github.com/pressly/goose/v3"
 )

@@ -15,6 +15,7 @@ import (
 	"github.com/daniil4142/book-market/category-service/internal/server"
 	"github.com/daniil4142/book-market/category-service/internal/service/category"
 	cat_repository "github.com/daniil4142/book-market/category-service/internal/service/category/repository"
+	"github.com/daniil4142/book-market/category-service/internal/service/database"
 )
 
 func main() {
