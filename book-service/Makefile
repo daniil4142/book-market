@@ -58,10 +58,10 @@ deps:
 	go install github.com/grpc-ecosystem/grpc-gateway/v2/protoc-gen-grpc-gateway@v2.5.0
 	go install github.com/grpc-ecosystem/grpc-gateway/v2/protoc-gen-openapiv2@v2.5.0
 	go install github.com/envoyproxy/protoc-gen-validate@v1.2.1
-	go install github.com/bufbuild/buf/cmd/buf@v0.56.0
-	go install github.com/bufbuild/buf/cmd/protoc-gen-buf-breaking@v0.56.0
-	go install github.com/bufbuild/buf/cmd/protoc-gen-buf-lint@v0.56.0
-	go install github.com/golangci/golangci-lint/cmd/golangci-lint@v1.42.1
+	go install github.com/bufbuild/buf/cmd/buf@v1.52.1
+	go install github.com/bufbuild/buf/cmd/protoc-gen-buf-breaking@v1.52.1
+	go install github.com/bufbuild/buf/cmd/protoc-gen-buf-lint@v1.52.1
+# go install github.com/golangci/golangci-lint/cmd/golangci-lint@v1.42.1
 	go mod download	
 
 .PHONY: build

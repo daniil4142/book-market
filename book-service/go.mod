@@ -17,15 +17,19 @@ require (
 	github.com/daniil4142/book-market/category-service/pkg/category-service v0.0.0-20250408134143-669d1bdf9bea
 	github.com/golang/mock v1.6.0
 	google.golang.org/genproto/googleapis/rpc v0.0.0-20250404141209-ee84b53bf3d0
+	google.golang.org/protobuf v1.36.6
 )
 
 require (
 	github.com/lann/builder v0.0.0-20180802200727-47ae307949d0 // indirect
 	github.com/lann/ps v0.0.0-20150810152359-62de8c46ede0 // indirect
 	github.com/mattn/go-colorable v0.1.13 // indirect
-	github.com/mattn/go-isatty v0.0.19 // indirect
+	github.com/mattn/go-isatty v0.0.20 // indirect
+	github.com/mfridman/interpolate v0.0.2 // indirect
+	github.com/sethvargo/go-retry v0.3.0 // indirect
+	go.uber.org/multierr v1.11.0 // indirect
+	golang.org/x/sync v0.13.0 // indirect
 	google.golang.org/genproto/googleapis/api v0.0.0-20250407143221-ac9807e6c755 // indirect
-	google.golang.org/protobuf v1.36.6 // indirect
 )
 
 require (
@@ -40,6 +44,7 @@ require (
 	github.com/jackc/pgtype v1.14.4 // indirect
 	github.com/jmoiron/sqlx v1.4.0
 	github.com/kr/text v0.2.0 // indirect
+	github.com/pressly/goose/v3 v3.24.2
 	github.com/rogpeppe/go-internal v1.14.1 // indirect
 	golang.org/x/crypto v0.37.0 // indirect
 	golang.org/x/net v0.39.0 // indirect
