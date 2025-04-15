@@ -2,6 +2,7 @@ package config
 
 import (
 	"os"
+	"time"
 
 	"gopkg.in/yaml.v3"
 )
@@ -45,8 +46,32 @@ type Swagger struct {
 	Filepath string `yaml:"filepath"`
 }
 
-type Database struct {
-	DSN string `yaml:"dsn"`
+type DB struct {
+	DSN             string        `yaml:"DSN"`
+	MaxOpenConns    int           `yaml:"maxOpenConns"`
+	MaxIdleConns    int           `yaml:"MaxIdleConns"`
+	ConnMaxIdleTime time.Duration `yaml:"connMaxIdleTime"`
+	ConnMaxLifetime time.Duration `yaml:"connMaxLifetime"`
+}
+
+func (db *DB) GetDSN() string {
+	return db.DSN
+}
+
+func (db *DB) GetMaxOpenConns() int {
+	return db.MaxOpenConns
+}
+
+func (db *DB) GetMaxIdleConns() int {
+	return db.MaxIdleConns
+}
+
+func (db *DB) GetConnMaxIdleTime() time.Duration {
+	return db.ConnMaxIdleTime
+}
+
+func (db *DB) GetConnMaxLifetime() time.Duration {
+	return db.ConnMaxLifetime
 }
 
 // Project - contains all parameters project information.
@@ -60,11 +85,11 @@ type Project struct {
 
 // Config - contains all configuration parameters in config package.
 type Config struct {
-	Project  Project  `yaml:"project"`
-	Grpc     Grpc     `yaml:"grpc"`
-	Gateway  Gateway  `yaml:"gateway"`
-	Swagger  Swagger  `yaml:"swagger"`
-	Database Database `yaml:"database"`
+	Project Project `yaml:"project"`
+	Grpc    Grpc    `yaml:"grpc"`
+	Gateway Gateway `yaml:"gateway"`
+	Swagger Swagger `yaml:"swagger"`
+	DB      DB      `yaml:"db"`
 }
 
 // ReadConfigYML - read configurations from file and init instance Config.

@@ -23,5 +23,9 @@ swagger:
   port: 7001
   filepath: "swagger/category-service/category-service.swagger.json"
 
-  database:
-    dsn: "postgres://user:password@localhost:4432/db"
+  db:
+    DSN: "postgres://user:password@localhost:4432/db"
+    maxOpenConns: 5
+    maxIdleConns: 5
+    connMaxIdleTime: 5m
+    connMaxLifetime: 5m

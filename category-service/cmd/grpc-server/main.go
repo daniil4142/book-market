@@ -1,9 +1,7 @@
 package main
 
 import (
-	"context"
 	"flag"
-	"time"
 
 	"github.com/rs/zerolog"
 	"github.com/rs/zerolog/log"
@@ -12,10 +10,10 @@ import (
 	_ "github.com/jackc/pgx/v4/stdlib"
 
 	"github.com/daniil4142/book-market/category-service/internal/config"
+	"github.com/daniil4142/book-market/category-service/internal/pkg/db"
 	"github.com/daniil4142/book-market/category-service/internal/server"
 	"github.com/daniil4142/book-market/category-service/internal/service/category"
 	cat_repository "github.com/daniil4142/book-market/category-service/internal/service/category/repository"
-	"github.com/daniil4142/book-market/category-service/internal/service/database"
 )
 
 func main() {
@@ -38,15 +36,13 @@ func main() {
 		zerolog.SetGlobalLevel(zerolog.DebugLevel)
 	}
 
-	initCtx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
-	defer cancel()
-
-	db, err := database.New(initCtx, cfg.Database.DSN)
+	conn, err := db.ConnectDB(&cfg.DB)
 	if err != nil {
-		log.Fatal().Err(err).Msg("Failed init configuration")
+		log.Fatal().Err(err).Msg("sql.Open() error")
 	}
+	defer conn.Close()
 
-	categoryRepository := cat_repository.New(db)
+	categoryRepository := cat_repository.New(conn)
 	categoryService := category.New(categoryRepository)
 
 	if err := server.NewGrpcServer(

@@ -1,12 +1,12 @@
 services:
   category-service:
-    build: ./category-service
+    build: ./../category-service
     ports:
       - 7000:7000
       - 7001:7001
       - 7002:7002
   book-service:
-    build: ./book-service
+    build: ./../book-service
     ports:
     - 8000:8000
     - 8001:8001
