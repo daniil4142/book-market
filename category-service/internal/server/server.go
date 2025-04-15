@@ -23,7 +23,6 @@ import (
 
 	api "github.com/daniil4142/book-market/category-service/internal/app/category-service"
 	"github.com/daniil4142/book-market/category-service/internal/config"
-	mwserver "github.com/daniil4142/book-market/category-service/internal/pkg/mw/server"
 	"github.com/daniil4142/book-market/category-service/internal/service/category"
 	desc "github.com/daniil4142/book-market/category-service/pkg/category-service"
 )
@@ -85,7 +84,7 @@ func (s *GrpcServer) Start(cfg *config.Config) error {
 			grpc_ctxtags.UnaryServerInterceptor(),
 			grpc_opentracing.UnaryServerInterceptor(),
 			grpcrecovery.UnaryServerInterceptor(),
-			mwserver.GRPCUnauthenticatedRequest,
+			// mwserver.GRPCUnauthenticatedRequest,
 		)),
 	)
 

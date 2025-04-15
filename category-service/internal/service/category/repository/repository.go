@@ -20,7 +20,7 @@ func New(db *sqlx.DB) Repository {
 func (r Repository) FindAllCategories(ctx context.Context) (category.Categories, error) {
 	sb := db.StatementBuilder.
 		Select("id", "name").
-		From("category")
+		From("public.category")
 
 	query, args, err := sb.ToSql()
 	if err != nil {

@@ -23,7 +23,7 @@ swagger:
   port: 8001
   filepath: "swagger/book-service/book-service.swagger.json"
 
-categoryServiceAddr: "localhost:7002"
+categoryServiceAddr: "host.docker.internal:7002"
 
 db:
   DSN: "postgres://daniil:password@localhost:4432/book"

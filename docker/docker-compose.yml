@@ -11,6 +11,19 @@ services:
     - 8000:8000
     - 8001:8001
     - 8002:8002
+  postgres_category:
+    image: postgres:latest
+    ports:
+      - target: 5432
+        published: 3432
+        protocol: tcp
+        mode: target
+    volumes:
+      - ./postgres_category:/var/lib/postgresql/data:rw
+    environment:
+      POSTGRES_DB: category
+      POSTGRES_USER: daniil
+      POSTGRES_PASSWORD: password
   postgres_book:
     image: postgres:latest
     ports:
@@ -22,19 +35,5 @@ services:
       - ./postgres_book:/var/lib/postgresql/data:rw
     environment:
       POSTGRES_DB: book
-      POSTGRES_USER: daniil
-      POSTGRES_PASSWORD: password
-
-  postgres_category:
-    image: postgres:latest
-    ports:
-      - target: 5432
-        published: 5432
-        protocol: tcp
-        mode: target
-    volumes:
-      - ./postgres_category:/var/lib/postgresql/data:rw
-    environment:
-      POSTGRES_DB: category
       POSTGRES_USER: daniil
       POSTGRES_PASSWORD: password

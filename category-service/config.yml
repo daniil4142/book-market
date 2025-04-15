@@ -24,7 +24,7 @@ swagger:
   filepath: "swagger/category-service/category-service.swagger.json"
 
 db:
-  DSN: "postgres://daniil:password@localhost:5432/category"
+  DSN: "postgres://daniil:password@localhost:3432/category"
   maxOpenConns: 5
   maxIdleConns: 5
   connMaxIdleTime: 5m
