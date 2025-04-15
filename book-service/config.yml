@@ -26,7 +26,7 @@ swagger:
 categoryServiceAddr: "host.docker.internal:7002"
 
 db:
-  DSN: "postgres://daniil:password@localhost:4432/book"
+  DSN: "postgres://daniil:password@host.docker.internal:4432/book"
   maxOpenConns: 5
   maxIdleConns: 5
   connMaxIdleTime: 5m
