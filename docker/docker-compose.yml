@@ -21,8 +21,8 @@ services:
     volumes:
       - ./postgres_book:/var/lib/postgresql/data:rw
     environment:
-      POSTGRES_DB: db
-      POSTGRES_USER: user
+      POSTGRES_DB: book
+      POSTGRES_USER: daniil
       POSTGRES_PASSWORD: password
 
   postgres_category:
@@ -35,6 +35,6 @@ services:
     volumes:
       - ./postgres_category:/var/lib/postgresql/data:rw
     environment:
-      POSTGRES_DB: db
-      POSTGRES_USER: user
+      POSTGRES_DB: category
+      POSTGRES_USER: daniil
       POSTGRES_PASSWORD: password

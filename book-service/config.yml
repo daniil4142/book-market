@@ -26,7 +26,7 @@ swagger:
 categoryServiceAddr: "localhost:7002"
 
 db:
-  DSN: "postgres://user:password@localhost:5432/db"
+  DSN: "postgres://daniil:password@localhost:4432/book"
   maxOpenConns: 5
   maxIdleConns: 5
   connMaxIdleTime: 5m
