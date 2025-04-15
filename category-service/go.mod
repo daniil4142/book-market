@@ -42,7 +42,7 @@ require (
 	golang.org/x/sys v0.31.0 // indirect
 	golang.org/x/text v0.23.0 // indirect
 	google.golang.org/genproto v0.0.0-20211021150943-2b146023228c // indirect
-	google.golang.org/protobuf v1.36.6
+	google.golang.org/protobuf v1.36.6 // indirect
 )
 
 //replace github.com/daniil4142/book-market/category-service/pkg/category-service/pkg/category-service => ./pkg/category-service

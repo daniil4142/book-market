@@ -61,7 +61,6 @@ deps:
 	go install github.com/bufbuild/buf/cmd/buf@v1.52.1
 	go install github.com/bufbuild/buf/cmd/protoc-gen-buf-breaking@v1.52.1
 	go install github.com/bufbuild/buf/cmd/protoc-gen-buf-lint@v1.52.1
-# go install github.com/golangci/golangci-lint/cmd/golangci-lint@v1.42.1
 	go mod download	
 
 .PHONY: build
@@ -76,3 +75,7 @@ build: generate .build
 			-X 'github.com/$(SERVICE_PATH)/internal/config.commitHash=$(COMMIT_HASH)' \
 		" \
 		-o ./bin/grpc-server$(shell go env GOEXE) ./cmd/grpc-server/main.go
+
+.PHONY: migrate
+migrate:
+	go run cmd/migration/main.go

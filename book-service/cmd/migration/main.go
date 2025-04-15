@@ -2,18 +2,15 @@ package main
 
 import (
 	"context"
-	"embed"
 
 	"github.com/daniil4142/book-market/book-service/internal/config"
 	"github.com/daniil4142/book-market/book-service/internal/pkg/db"
+	"github.com/daniil4142/book-market/book-service/migrations"
 
 	_ "github.com/jackc/pgx/v4/stdlib"
 	"github.com/pressly/goose/v3"
 	"github.com/rs/zerolog/log"
 )
-
-//go:embed migrations/*.sql
-var embedMigrations embed.FS
 
 func main() {
 	if err := config.ReadConfigYML("config.yml"); err != nil {
@@ -30,7 +27,7 @@ func main() {
 	}
 	defer conn.Close()
 
-	goose.SetBaseFS(embedMigrations)
+	goose.SetBaseFS(migrations.EmbedFS)
 
 	const cmd = "up"
 

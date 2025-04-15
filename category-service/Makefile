@@ -75,3 +75,7 @@ build: generate .build
 			-X 'github.com/$(SERVICE_PATH)/internal/config.commitHash=$(COMMIT_HASH)' \
 		" \
 		-o ./bin/grpc-server$(shell go env GOEXE) ./cmd/grpc-server/main.go
+
+.PHONY: migrate
+migrate:
+	go run cmd/migration/main.go
