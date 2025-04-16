@@ -14,6 +14,8 @@ var ErrWrongCategory = errors.New("category does not exist")
 
 type IRepository interface {
 	SaveBook(ctx context.Context, book *Book) (int64, error)
+	GetBooks(ctx context.Context, ids []int64) ([]Book, error)
+	DeleteBooks(ctx context.Context, ids []int64) error
 }
 
 type ICategoryClient interface {
@@ -58,4 +60,12 @@ func (s *Service) CreateBook(
 	}
 
 	return book, nil
+}
+
+func (s *Service) DeleteBooks(ctx context.Context, ids []int64) error {
+	return s.repo.DeleteBooks(ctx, ids)
+}
+
+func (s *Service) GetBooks(ctx context.Context, ids []int64) ([]Book, error) {
+	return s.repo.GetBooks(ctx, ids)
 }

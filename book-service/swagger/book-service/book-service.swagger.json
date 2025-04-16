@@ -47,6 +47,70 @@
           "BookService"
         ]
       }
+    },
+    "/books/delete": {
+      "post": {
+        "operationId": "BookService_DeleteBook",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1DeleteBookResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/v1DeleteBookRequest"
+            }
+          }
+        ],
+        "tags": [
+          "BookService"
+        ]
+      }
+    },
+    "/books/get": {
+      "post": {
+        "operationId": "BookService_GetBook",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1GetBookResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/v1GetBookRequest"
+            }
+          }
+        ],
+        "tags": [
+          "BookService"
+        ]
+      }
     }
   },
   "definitions": {
@@ -113,6 +177,44 @@
       "properties": {
         "result": {
           "$ref": "#/definitions/v1Book"
+        }
+      }
+    },
+    "v1DeleteBookRequest": {
+      "type": "object",
+      "properties": {
+        "bookIds": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "format": "int64"
+          }
+        }
+      }
+    },
+    "v1DeleteBookResponse": {
+      "type": "object"
+    },
+    "v1GetBookRequest": {
+      "type": "object",
+      "properties": {
+        "bookIds": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "format": "int64"
+          }
+        }
+      }
+    },
+    "v1GetBookResponse": {
+      "type": "object",
+      "properties": {
+        "books": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/v1Book"
+          }
         }
       }
     }

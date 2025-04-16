@@ -14,6 +14,18 @@ service BookService {
       body: "*"
     };
   }
+  rpc DeleteBook (DeleteBookRequest) returns (DeleteBookResponse) {
+    option (google.api.http) = {
+      post: "/books/delete"
+      body: "*"
+    };
+  }
+  rpc GetBook (GetBookRequest) returns (GetBookResponse) {
+    option (google.api.http) = {
+      post: "/books/get"
+      body: "*"
+    };
+  }
 }
 
 message Book {
@@ -29,4 +41,18 @@ message CreateBookRequest {
 
 message CreateBookResponse {
   Book result = 1;
+}
+
+message DeleteBookRequest {
+  repeated int64 book_ids = 1 [(validate.rules).repeated.items.int64.gt = 0];
+}
+
+message DeleteBookResponse {}
+
+message GetBookRequest {
+  repeated int64 book_ids = 1 [(validate.rules).repeated.items.int64.gt = 0];
+}
+
+message GetBookResponse {
+  repeated Book books = 1;
 }
