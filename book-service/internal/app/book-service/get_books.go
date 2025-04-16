@@ -7,7 +7,7 @@ import (
 )
 
 func (i *Implementation) GetBook(ctx context.Context, req *desc.GetBookRequest) (*desc.GetBookResponse, error) {
-	books, err := i.bookService.GetBooks(ctx, req.GetBookIds)
+	books, err := i.bookService.GetBooks(ctx, req.GetBookIds())
 	if err != nil {
 		return nil, err
 	}

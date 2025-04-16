@@ -1,6 +1,6 @@
 module github.com/daniil4142/book-market/book-service
 
-go 1.23.5
+go 1.24.2
 
 require (
 	github.com/grpc-ecosystem/go-grpc-middleware v1.4.0
@@ -13,10 +13,10 @@ require (
 )
 
 require (
-	github.com/daniil4142/book-market/book-service/pkg/book-service v0.0.0-20250408134143-669d1bdf9bea
-	github.com/daniil4142/book-market/category-service/pkg/category-service v0.0.0-20250408134143-669d1bdf9bea
+	github.com/daniil4142/book-market/book-service/pkg/book-service v0.0.0-20250416160610-ababd67e18f0
+	github.com/daniil4142/book-market/category-service/pkg/category-service v0.0.0-20250416160610-ababd67e18f0
 	github.com/golang/mock v1.6.0
-	google.golang.org/genproto/googleapis/rpc v0.0.0-20250404141209-ee84b53bf3d0
+	google.golang.org/genproto/googleapis/rpc v0.0.0-20250409194420-de1ac958c67a
 )
 
 require (
@@ -28,7 +28,7 @@ require (
 	github.com/sethvargo/go-retry v0.3.0 // indirect
 	go.uber.org/multierr v1.11.0 // indirect
 	golang.org/x/sync v0.13.0 // indirect
-	google.golang.org/genproto/googleapis/api v0.0.0-20250407143221-ac9807e6c755 // indirect
+	google.golang.org/genproto/googleapis/api v0.0.0-20250414145226-207652e42e2e // indirect
 	google.golang.org/protobuf v1.36.6 // indirect
 )
 
