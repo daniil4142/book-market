@@ -60,7 +60,6 @@ deps:
 	go install github.com/envoyproxy/protoc-gen-validate@v1.2.1
 	go install github.com/bufbuild/buf/cmd/buf@v1.52.1
 	go install github.com/bufbuild/buf/cmd/protoc-gen-buf-breaking@v1.52.1
-	go install github.com/bufbuild/buf/cmd/protoc-gen-buf-lint@v1.52.1
 	go mod download	
 
 .PHONY: build

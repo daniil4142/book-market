@@ -1,6 +1,6 @@
 module github.com/daniil4142/book-market/category-service
 
-go 1.23.5
+go 1.24.2
 
 require (
 	github.com/daniil4142/book-market/category-service/pkg/category-service v0.0.0-20250402184720-5a5f56b66669

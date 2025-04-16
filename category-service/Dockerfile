@@ -1,6 +1,6 @@
 # Builder
 
-FROM golang:1.23-alpine AS builder
+FROM golang:1.24-alpine AS builder
 RUN apk add --update make git protoc protobuf protobuf-dev curl gcc musl-dev
 
 ARG GITHUB_PATH=github.com/daniil4142/book-market/category-service
